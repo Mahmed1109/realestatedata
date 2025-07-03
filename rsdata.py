@@ -33,3 +33,21 @@ df['total_bedrooms'] = imputer.fit_transform(df[['total_bedrooms']])
 
 print("\nMissing values after imputation:")
 print(df.isnull().sum())
+
+imputer = SimpleImputer(strategy='median')
+df['total_bedrooms'] = imputer.fit_transform(df[['total_bedrooms']])
+
+print("\nMissing values after imputation:")
+print(df.isnull().sum())
+
+#Visualise with Plotly 
+
+fig1 = px.histogram(df, x='median_house_value', nbins=50, title='Distribution of Median House Value')
+fig1.show()
+
+fig2 = px.scatter_mapbox(
+    df, lat="latitude", lon="longitude", color="median_house_value", size='population',
+    color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=8,
+    mapbox_style="carto-positron", title="Geographic Distribution of House Prices"
+)
+fig2.show()
