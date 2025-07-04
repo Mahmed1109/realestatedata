@@ -51,3 +51,20 @@ fig2 = px.scatter_mapbox(
     mapbox_style="carto-positron", title="Geographic Distribution of House Prices"
 )
 fig2.show()
+features = [
+    'median_income', 'housing_median_age', 'total_rooms', 'total_bedrooms',
+    'population', 'households', 'rooms_per_household', 'bedrooms_per_room', 'population_per_household',
+    'latitude', 'longitude'
+]
+X = df[features]
+y = df['median_house_value']
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+y_pred_lr = lr.predict(X_test)
+print("\nLinear Regression RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_lr)))
+print("Linear Regression R2:", r2_score(y_test, y_pred_lr))
