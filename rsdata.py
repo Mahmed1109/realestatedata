@@ -68,3 +68,14 @@ lr.fit(X_train, y_train)
 y_pred_lr = lr.predict(X_test)
 print("\nLinear Regression RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_lr)))
 print("Linear Regression R2:", r2_score(y_test, y_pred_lr))
+
+rf = RandomForestRegressor(random_state=42)
+params_rf = {
+    'n_estimators': [50, 100],
+    'max_features': ['auto', 'sqrt'],
+    'max_depth': [10, 20, None]
+}
+grid_rf = GridSearchCV(rf, param_grid=params_rf, cv=3, scoring='neg_mean_squared_error', n_jobs=-1)
+grid_rf.fit(X_train, y_train)
+
+print("\nBest Random Forest params:", grid_rf.best_params_)
