@@ -79,3 +79,15 @@ grid_rf = GridSearchCV(rf, param_grid=params_rf, cv=3, scoring='neg_mean_squared
 grid_rf.fit(X_train, y_train)
 
 print("\nBest Random Forest params:", grid_rf.best_params_)
+
+best_rf = grid_rf.best_estimator_
+y_pred_rf = best_rf.predict(X_test)
+print("Random Forest RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_rf)))
+print("Random Forest R2:", r2_score(y_test, y_pred_rf))
+
+gbr = GradientBoostingRegressor(random_state=42)
+params_gbr = {
+    'n_estimators': [100, 200],
+    'learning_rate': [0.05, 0.1],
+    'max_depth': [3, 5]
+}
