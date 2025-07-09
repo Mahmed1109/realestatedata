@@ -91,3 +91,12 @@ params_gbr = {
     'learning_rate': [0.05, 0.1],
     'max_depth': [3, 5]
 }
+grid_gbr = GridSearchCV(gbr, param_grid=params_gbr, cv=3, scoring='neg_mean_squared_error', n_jobs=-1)
+grid_gbr.fit(X_train, y_train)
+
+print("\nBest Gradient Boosting params:", grid_gbr.best_params_)
+
+best_gbr = grid_gbr.best_estimator_
+y_pred_gbr = best_gbr.predict(X_test)
+print("Gradient Boosting RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_gbr)))
+print("Gradient Boosting R2:", r2_score(y_test, y_pred_gbr))
