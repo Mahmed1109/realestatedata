@@ -100,3 +100,10 @@ best_gbr = grid_gbr.best_estimator_
 y_pred_gbr = best_gbr.predict(X_test)
 print("Gradient Boosting RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_gbr)))
 print("Gradient Boosting R2:", r2_score(y_test, y_pred_gbr))
+
+importances = best_rf.feature_importances_
+feature_names = features
+feat_imp_df = pd.DataFrame({'feature': feature_names, 'importance': importances}).sort_values(by='importance', ascending=False)
+
+fig3 = px.bar(feat_imp_df, x='feature', y='importance', title='Feature Importance - Random Forest')
+fig3.show()
